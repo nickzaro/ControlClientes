@@ -17,11 +17,7 @@
 
         <jsp:include page="WEB-INF/paginas/comunes/botonesNavegacion.jsp"></jsp:include>  
 
-            <ul>
-            <c:forEach var="cliente" items="${clientes}">
-                <li>${cliente.idCliente} ${cliente.nombre} ${cliente.apellido} ${cliente.email} ${cliente.telefono} ${cliente.saldo}</li>
-                </c:forEach>
-        </ul>
+        <jsp:include page="WEB-INF/paginas/cliente/listadoClientes.jsp"></jsp:include>
 
         <jsp:include page="WEB-INF/paginas/comunes/piePagina.jsp"></jsp:include>
         <!-- Option 1: Bootstrap Bundle with Popper -->
