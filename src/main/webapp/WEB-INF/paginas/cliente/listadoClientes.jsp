@@ -56,8 +56,8 @@
                             </h4>
                         </div>
                     </div>
-                            
-                            
+
+
                     <div class="card text-center bg-success text-white mb-3">
                         <div class="card-header">
                             <h3>Total Clientes</h3>
@@ -78,3 +78,7 @@
 
 </div>
 </section>
+
+
+<!-- Agregar cliente modal -->
+<jsp:include page="/WEB-INF/paginas/cliente/agregarCliente.jsp"></jsp:include>
