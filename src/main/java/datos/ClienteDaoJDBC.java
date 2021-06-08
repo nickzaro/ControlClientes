@@ -12,9 +12,9 @@ import java.util.logging.Logger;
 
 public class ClienteDaoJDBC {
 
-    private static final String SQL_SELECT = "SELECT id_cliente, nombre, apellido, email, telefono, saldo FORM cliente";
+    private static final String SQL_SELECT = "SELECT id_cliente, nombre, apellido, email, telefono, saldo FROM cliente";
 
-    private static final String SQL_SELECT_BY_ID = "SELECT id_cliente, nombre, apellido, email, telefono, saldo FORM cliente"
+    private static final String SQL_SELECT_BY_ID = "SELECT id_cliente, nombre, apellido, email, telefono, saldo FROM cliente"
             + " WHERE id_cliente = ?";
 
     private static final String SQL_INSERT = "INSERT INTO cliente(nombre, apellido, email, telefono, saldo)"
