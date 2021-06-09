@@ -1,4 +1,3 @@
-
 package web;
 
 import datos.ClienteDaoJDBC;
@@ -12,25 +11,55 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/ServletControlador")
-public class ServletControlador extends HttpServlet{
+public class ServletControlador extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Cliente> clientes = new ClienteDaoJDBC().listar();
-        System.out.print("Clientes= "+ clientes);
-        req.setAttribute("clientes",clientes);
-        req.setAttribute("saldoTotal",saldoTotal(clientes));
-        req.setAttribute("totalClientes",clientes.size());
-        req.getRequestDispatcher("clientes.jsp").forward(req, resp);
+
+        accionDefault(req, resp);
     }
-    
-    private double saldoTotal(List<Cliente> clientes){
-        double saldoTotal=0;
-        for(Cliente cliente: clientes){
-            saldoTotal+= cliente.getSaldo();
+
+    private double saldoTotal(List<Cliente> clientes) {
+        double saldoTotal = 0;
+        for (Cliente cliente : clientes) {
+            saldoTotal += cliente.getSaldo();
         }
         return saldoTotal;
     }
-    
-    
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String accion = req.getParameter("accion");
+        if (accion != null) {
+            switch (accion) {
+                case "insertar":
+                    insertarCliente(req, resp);
+                    break;
+            }
+        }
+        accionDefault(req, resp);
+    }
+
+    private void insertarCliente(HttpServletRequest req, HttpServletResponse resp) {
+        String nombre = req.getParameter("nombre");
+        String apellido = req.getParameter("apellido");
+        String email = req.getParameter("email");
+        String telefono = req.getParameter("telefono");
+        double saldo = 0;
+        String saldoString = req.getParameter("saldo");
+        if(saldoString != null && !"".equals(saldoString)){
+            saldo = Double.parseDouble(saldoString);
+        }
+        new ClienteDaoJDBC().insertar(new Cliente(nombre, apellido, email, telefono, saldo));
+    }
+
+    private void accionDefault(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<Cliente> clientes = new ClienteDaoJDBC().listar();
+        System.out.print("Clientes= " + clientes);
+        req.setAttribute("clientes", clientes);
+        req.setAttribute("saldoTotal", saldoTotal(clientes));
+        req.setAttribute("totalClientes", clientes.size());
+        req.getRequestDispatcher("clientes.jsp").forward(req, resp);
+    }
+
 }
