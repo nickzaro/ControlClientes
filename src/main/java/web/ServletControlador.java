@@ -16,8 +16,17 @@ public class ServletControlador extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        String accion = req.getParameter("accion");
+        if (accion != null) {
+            switch (accion) {
+                case "editar":
+                    editarCliente(req, resp);
+                    break;
+            }
+        }else {
         accionDefault(req, resp);
+        }
+        
     }
 
     private double saldoTotal(List<Cliente> clientes) {
@@ -35,6 +44,9 @@ public class ServletControlador extends HttpServlet {
             switch (accion) {
                 case "insertar":
                     insertarCliente(req, resp);
+                    break;
+                case "modificar":
+                    modificarCliente(req,resp);
                     break;
             }
         }
@@ -67,6 +79,28 @@ public class ServletControlador extends HttpServlet {
         // req.getRequestDispatcher("clientes.jsp").forward(req, resp); // se ejecuta
         //el mismo direccion, no se entera la vista
         resp.sendRedirect("clientes.jsp"); // para que cambie la direccion
+    }
+
+    private void editarCliente(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int idCliente = Integer.parseInt(req.getParameter("idCliente")); // TODO: chequear solo numeros
+        Cliente cliente = new ClienteDaoJDBC().encontrar(new Cliente(idCliente));
+
+        req.setAttribute("cliente", cliente);
+        String jspEditar = "WEB-INF/paginas/cliente/editarCliente.jsp";
+        req.getRequestDispatcher(jspEditar).forward(req, resp); // enmascara la pagina jspEditar a la direccion actual.
+        
+        
+    }
+
+    private void modificarCliente(HttpServletRequest req, HttpServletResponse resp) {
+        int idCliente = Integer.parseInt(req.getParameter("idCliente")); // TODO: chequear solo numeros
+        Cliente cliente = new Cliente(idCliente);
+        cliente.setNombre(req.getParameter("nombre"));
+        cliente.setApellido(req.getParameter("apellido"));
+        cliente.setEmail(req.getParameter("email"));
+        cliente.setTelefono(req.getParameter("telefono"));
+        cliente.setSaldo(Double.parseDouble(req.getParameter("saldo")));
+        new ClienteDaoJDBC().actualizar(cliente);
     }
 
 }
