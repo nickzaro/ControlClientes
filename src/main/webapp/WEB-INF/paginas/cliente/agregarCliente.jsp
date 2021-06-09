@@ -26,7 +26,7 @@
                         <input type="email" class="form-control" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="telefono">Direccion</label>
+                        <label for="telefono">Telefono</label>
                         <input type="tel" class="form-control" name="telefono" required>
                     </div>
                     <div class="form-group">

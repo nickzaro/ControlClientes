@@ -43,7 +43,7 @@
                                             <input type="email" class="form-control" name="email" required value="${cliente.email}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="telefono">Direccion</label>
+                                            <label for="telefono">Telefono</label>
                                             <input type="tel" class="form-control" name="telefono" required value="${cliente.telefono}">
                                         </div>
                                         <div class="form-group">
