@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/ServletControlador")
 public class ServletControlador extends HttpServlet {
@@ -53,13 +54,19 @@ public class ServletControlador extends HttpServlet {
         new ClienteDaoJDBC().insertar(new Cliente(nombre, apellido, email, telefono, saldo));
     }
 
-    private void accionDefault(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void accionDefault(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
         List<Cliente> clientes = new ClienteDaoJDBC().listar();
         System.out.print("Clientes= " + clientes);
-        req.setAttribute("clientes", clientes);
-        req.setAttribute("saldoTotal", saldoTotal(clientes));
-        req.setAttribute("totalClientes", clientes.size());
-        req.getRequestDispatcher("clientes.jsp").forward(req, resp);
+        HttpSession sesion = req.getSession(); 
+        // HttpSession necesario para que se conservar los valores despues del redirect
+        
+        sesion.setAttribute("clientes", clientes);
+        sesion.setAttribute("saldoTotal", saldoTotal(clientes));
+        sesion.setAttribute("totalClientes", clientes.size());
+        // req.getRequestDispatcher("clientes.jsp").forward(req, resp); // se ejecuta
+        //el mismo direccion, no se entera la vista
+        resp.sendRedirect("clientes.jsp"); // para que cambie la direccion
     }
 
 }
