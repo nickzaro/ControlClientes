@@ -33,9 +33,14 @@
                                     <td>${cliente.telefono}</td>
                                     <td> <fmt:formatNumber value="${cliente.saldo}" type="currency"></fmt:formatNumber> </td>
                                         <td>
-                                            <a href="${pageContentext.request.contextPath}/ServletControlador?accion=editar&idCliente=${cliente.idCliente}"
+                                            <a href="${pageContext.request.contextPath}/ServletControlador?accion=editar&idCliente=${cliente.idCliente}"
                                            class="btn btn-secondary">
                                             <i class="fas fa-angle-double-right"></i> Editar</a>
+                                    </td>
+                                    <td>
+                                            <a href="${pageContext.request.contextPath}/ServletControlador?accion=eliminar&idCliente=${cliente.idCliente}"
+                                           class="btn btn-danger">
+                                            <i class="fas fa-trash"></i> Eliminar</a>
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -21,7 +21,7 @@ public class ClienteDaoJDBC {
             + " VALUES(?,?,?,?,?)";
 
     private static final String SQL_UPDATE = "UPDATE cliente"
-            + " SET nombre=?, apellido=?, email=?, telefono=?, saldo=? WHERE id_clientes=?";
+            + " SET nombre=?, apellido=?, email=?, telefono=?, saldo=? WHERE id_cliente=?";
 
     private static final String SQL_DELETE = "DELETE FROM cliente WHERE id_cliente = ?";
 
@@ -66,7 +66,8 @@ public class ClienteDaoJDBC {
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
             stmt.setInt(1, cliente.getIdCliente()); // primer parametro de la consulta
             rs = stmt.executeQuery();
-            rs.absolute(1); // posicionado en el primer registro.
+            rs.next(); // para poner el resultado en el indice=1
+          //  rs.absolute(1); // posicionado en el primer registro.
 
             String nombre = rs.getString("nombre");
             String apellido = rs.getString("apellido");
