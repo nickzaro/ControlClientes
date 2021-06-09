@@ -22,6 +22,10 @@ public class ServletControlador extends HttpServlet {
                 case "editar":
                     editarCliente(req, resp);
                     break;
+                case "eliminar":
+                    eliminarCliente(req,resp);
+                    accionDefault(req, resp);
+                    break;
             }
         }else {
         accionDefault(req, resp);
@@ -101,6 +105,11 @@ public class ServletControlador extends HttpServlet {
         cliente.setTelefono(req.getParameter("telefono"));
         cliente.setSaldo(Double.parseDouble(req.getParameter("saldo")));
         new ClienteDaoJDBC().actualizar(cliente);
+    }
+
+    private void eliminarCliente(HttpServletRequest req, HttpServletResponse resp) {
+        int idCliente = Integer.parseInt(req.getParameter("idCliente"));
+        new ClienteDaoJDBC().eliminar(new Cliente(idCliente));
     }
 
 }
